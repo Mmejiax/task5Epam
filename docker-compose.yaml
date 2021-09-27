@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+    web:
+        build: .
+        ports:
+            - "80:8000"
+        environment:
+            REDIS_HOST: redis
+            REDIS_PORT: 6379
+        depends_on:
+            - redis
+        networks:
+            - mynet
+    
+    redis:
+        image: "redis:alpine"
+        ports:
+            - 6379:6379
+        volumes:
+            - dataRedis:/data
+        networks:
+            - mynet
+
+volumes:
+    dataRedis:
+
+networks:
+    mynet:
